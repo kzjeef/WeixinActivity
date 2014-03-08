@@ -71,13 +71,14 @@
     req.message = WXMediaMessage.message;
     req.message.title = title;
     [self setThumbImage:req];
-    if (url) {
+    if (url && !image) {
         WXWebpageObject *webObject = WXWebpageObject.object;
         webObject.webpageUrl = [url absoluteString];
         req.message.mediaObject = webObject;
     } else if (image) {
         WXImageObject *imageObject = WXImageObject.object;
         imageObject.imageData = UIImageJPEGRepresentation(image, 1);
+        imageObject.imageUrl = [url absoluteString];
         req.message.mediaObject = imageObject;
     }
     [WXApi sendReq:req];
